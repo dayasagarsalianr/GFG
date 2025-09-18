@@ -1,12 +1,11 @@
 class Solution:
-    def nextLargerElement(self, arr):
+    def nextGreater(self, arr):
         n = len(arr)
         res = [-1] * n
-        st = []
-        for i in range(2 * n - 1, -1, -1):
-            while st and st[-1] <= arr[i % n]:
-                st.pop()
-            if i < n and st:
-                res[i] = st[-1]
-            st.append(arr[i % n])
+        stk = []
+        for i in range(2 * n):
+            while stk and arr[stk[-1]] < arr[i % n]:
+                res[stk.pop()] = arr[i % n]
+            if i < n:
+                stk.append(i)
         return res

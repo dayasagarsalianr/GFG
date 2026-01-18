@@ -1,10 +1,11 @@
-from collections import Counter
 class Solution:
-    def findGreater(self, a):
-        f = Counter(a)
-        r, s = [-1]*len(a), []
-        for i, v in enumerate(a):
-            while s and f[v] > f[a[s[-1]]]:
-                r[s.pop()] = v
-            s.append(i)
-        return r
+    def nextFreqGreater(self, arr):
+        freq = {}
+        for x in arr: freq[x] = freq.get(x, 0) + 1
+        res = [-1] * len(arr)
+        st = []
+        for i in range(len(arr) - 1, -1, -1):
+            while st and freq[arr[st[-1]]] <= freq[arr[i]]: st.pop()
+            if st: res[i] = arr[st[-1]]
+            st.append(i)
+        return res

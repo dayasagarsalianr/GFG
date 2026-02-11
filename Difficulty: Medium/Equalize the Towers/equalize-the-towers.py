@@ -1,12 +1,13 @@
 class Solution:
     def minCost(self, heights, cost):
-        l, h = 0, max(heights)
-        while l < h:
-            m = l + (h - l) // 2
-            c1 = sum(abs(heights[i] - m) * cost[i] for i in range(len(heights)))
-            c2 = sum(abs(heights[i] - m - 1) * cost[i] for i in range(len(heights)))
-            if c1 <= c2:
-                h = m
-            else:
-                l = m + 1
-        return sum(abs(heights[i] - l) * cost[i] for i in range(len(heights)))
+        n = len(heights)
+        v = sorted(zip(heights, cost))
+        total = sum(cost)
+        s, res = 0, 0
+        for h, c in v:
+            s += c
+            if s >= (total + 1) // 2:
+                for i in range(n):
+                    res += abs(heights[i] - h) * cost[i]
+                return res
+        return 0
